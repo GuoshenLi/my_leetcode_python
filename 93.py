@@ -20,7 +20,6 @@ class Solution:
 
 
 
-
 # 我已经不再是从前那个少年
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
