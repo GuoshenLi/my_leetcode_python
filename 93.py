@@ -20,62 +20,34 @@ class Solution:
 
 
 
+
+# 我已经不再是从前那个少年
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
 
-        res = []
-        n = len(s)
 
-        def dfs(tmp, start):
-            if len(tmp) == 4:
-                if start == n:
-                    final = '.'.join(map(str, tmp))
-                    if len(final) == n + 3:
-                        res.append(final)
+        n = len(s)
+        res = []
+
+
+        def dfs(start, tmp):
+            if start == n:
+                if len(tmp) == 4:
+                    res.append('.'.join(tmp))
                 return None
 
-            for i in range(3):
-                if start + i + 1 > n:
-                    break
-                tmp_num = int(s[start: start + i + 1])
-                if 0 <= tmp_num <= 255:
-                    tmp.append(tmp_num)
-                    dfs(tmp, start + i + 1)
+            for end in range(start, min(start + 3, n)):
+                slice_ = s[start: end + 1]
+                if start != end and slice_[0] == '0':
+                    continue
+                if 0 <= int(slice_) <= 255:
+                    tmp.append(slice_)
+                    dfs(end + 1, tmp)
                     tmp.pop()
 
-        dfs([], 0)
-
+        dfs(0, [])
         return res
 
-
-class Solution:
-    def restoreIpAddresses(self, s: str) -> List[str]:
-
-        res = []
-        n = len(s)
-
-        def dfs(tmp, start):
-            if len(tmp) == 4:
-                if start == n:
-                    final = '.'.join(map(str, tmp))
-                    # if len(final) == n + 3: # 去除前导0
-                    res.append(final)
-                return None
-
-            for i in range(3):
-                if start + i + 1 > n:
-                    break
-                tmp_num = s[start: start + i + 1]
-                # 现在这里判断一下不会超时
-                # 在这里判断有没有前导0。
-                if len(tmp_num) == len(str(int(tmp_num))) and 0 <= int(tmp_num) <= 255:
-                        tmp.append(int(tmp_num))
-                        dfs(tmp, start + i + 1)
-                        tmp.pop()
-
-        dfs([], 0)
-
-        return res
 
 
 
