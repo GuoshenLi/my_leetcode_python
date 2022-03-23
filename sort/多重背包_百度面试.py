@@ -3,6 +3,34 @@ https://www.acwing.com/problem/content/4/
 百度笔试
 '''
 
+
+# 二维数组
+N, V = list(map(int, input().split()))
+
+items = [list(map(int, input().split())) for i in range(N)]
+
+# item[i][0] => v 体积
+# item[i][1] => w 价值
+# item[i][2] => s 数量
+
+dp = [[0] * (V + 1) for i in range(N + 1)]  # dp[i][j]  items的前i个 背包容量为j的最大体积
+
+for i in range(1, N + 1):
+    v, w, s = items[i - 1]
+    for j in range(1, V + 1):
+        k = 1
+        while k <= s and j - k * v >= 0:
+            dp[i][j] = max(dp[i][j], dp[i - 1][j - k * v] + k * w)
+            k += 1
+        dp[i][j] = max(dp[i - 1][j], dp[i][j])
+
+
+print(dp[-1][-1])
+
+
+
+
+# 1维度数组
 N, V = list(map(int, input().split()))
 
 items = [list(map(int, input().split())) for i in range(N)]
