@@ -45,3 +45,35 @@ node2.left = node4
 node3.left = node5
 
 print(Solution().countUnivalSubtrees(root))
+
+
+
+
+class Solution:
+    def countUnivalSubtrees(self, root):
+        if not root: return 0
+        self.count = 0
+
+        def dfs(root):
+            if not root.left and not root.right:
+                self.count += 1
+                return True
+
+            same_flag = True
+
+            if root.left:
+                same_flag = dfs(root.left) and same_flag and root.left.val == root.val
+
+            if root.right:
+                same_flag = dfs(root.right) and same_flag and root.right.val == root.val
+
+            if same_flag:
+                self.count += 1
+            return same_flag
+
+
+        dfs(root)
+
+        return self.count
+
+
