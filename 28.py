@@ -58,7 +58,7 @@ class Solution:
         m = len(haystack)
         n = len(needle)
         next = self.get_next(needle, n)
-
+        print(next)
         j = 0
         for i in range(m):
             while j > 0 and haystack[i] != needle[j]:
@@ -71,3 +71,7 @@ class Solution:
                 return i - n + 1
 
         return -1
+
+
+print(Solution().strStr(haystack='abxabcabcaby', needle='abcaby'))
+

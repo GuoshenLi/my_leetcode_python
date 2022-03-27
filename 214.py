@@ -96,5 +96,3 @@ class Solution:
 
 
 print(Solution().get_next(s = "aacecaaa"))
-
-
