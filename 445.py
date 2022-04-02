@@ -33,49 +33,55 @@ class Solution:
 #         self.val = x
 #         self.next = None
 
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+
         stack1 = []
         stack2 = []
+
         while l1:
             stack1.append(l1.val)
             l1 = l1.next
+
         while l2:
             stack2.append(l2.val)
             l2 = l2.next
 
-        carry = 0
-        head = None #  头插法可以直接初始化head = None
-        while stack1 and stack2:
-            digit1 = stack1.pop()
-            digit2 = stack2.pop()
-            digit = (carry + digit1 + digit2) % 10
-            carry = (carry + digit1 + digit2) // 10
 
-            node = ListNode(digit)
-            node.next = head
-            head = node
+        head = None
+        carry = 0
+        while stack1 and stack2:
+            val1 = stack1.pop()
+            val2 = stack2.pop()
+            digit = (val1 + val2 + carry) % 10
+            carry = (val1 + val2 + carry) // 10
+
+            head = ListNode(digit, head)
+
 
         while stack1:
-            digit1 = stack1.pop()
-            digit = (carry + digit1) % 10
-            carry = (carry + digit1) // 10
+            val1 = stack1.pop()
+            digit = (val1 + carry) % 10
+            carry = (val1 + carry) // 10
 
-            node = ListNode(digit)
-            node.next = head
-            head = node
+            head = ListNode(digit, head)
 
         while stack2:
-            digit2 = stack2.pop()
-            digit = (carry + digit2) % 10
-            carry = (carry + digit2) // 10
+            val2 = stack2.pop()
+            digit = (val2 + carry) % 10
+            carry = (val2 + carry) // 10
 
-            node = ListNode(digit)
-            node.next = head
-            head = node
+            head = ListNode(digit, head)
 
         if carry:
-            node = ListNode(1)
-            node.next = head
-            head = node
+            head = ListNode(1, head)
+
         return head
+
+
+

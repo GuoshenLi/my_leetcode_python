@@ -43,7 +43,6 @@ class Solution:
             temp.next = p1
             temp = temp.next
 
-        return head
 
 
 
