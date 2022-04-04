@@ -42,35 +42,33 @@ class Solution:
 
         return paths
 
-# dfs #
+# dfs
 # Definition for a binary tree node.
 # class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-from collections import deque
-
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 
 class Solution:
-    def pathSum(self, root: TreeNode, sum_: int) -> List[List[int]]:
-        if not root:
-            return []
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
 
-        self.final_path = []
-        self.recur_sum(root, sum_, [])
-        return self.final_path
+        if not root: return []
+        res = []
 
-    def recur_sum(self, node, sum_, path):
-        if not node:
-            return None
+        def dfs(node, targetSum, tmp):
+            if not node: return None
+            if not node.left and not node.right:
+                if node.val == targetSum:
+                    res.append(tmp + [node.val])
+                return None
 
-        if not node.left and not node.right:
-            if node.val == sum_:
-                self.final_path.append(path + [node.val])
+            dfs(node.left, targetSum - node.val, tmp + [node.val])
+            dfs(node.right, targetSum - node.val, tmp + [node.val])
 
-        self.recur_sum(node.left, sum_ - node.val, path + [node.val])
-        self.recur_sum(node.right, sum_ - node.val, path + [node.val])
+
+        dfs(root, targetSum, [])
+        return res
 
 
 
