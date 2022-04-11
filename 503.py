@@ -4,6 +4,7 @@ class Solution:
         n = len(nums)
         res = [-1] * n
         stack = []
+
         # 跟i相关的都要除以n
         for i in range(2 * n - 1):
             while stack and nums[stack[-1]] < nums[i % n]:

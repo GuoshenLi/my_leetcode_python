@@ -31,3 +31,23 @@ class Solution:
         return res
 
 print(Solution().lengthLongestPath(input = "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"))
+
+# 2022 4 10 更简洁
+class Solution:
+    def lengthLongestPath(self, input: str) -> int:
+        input = input.split('\n')
+
+        stack = []   # 单调严格递增栈
+        res = 0
+        for item in input:
+
+            while stack and item.count('\t') <= stack[-1].count('\t'):
+                stack.pop()
+
+            stack.append(item)
+            if '.' in item:
+                indent = len(stack)
+                res = max(res, len("".join(stack).replace('\t', '')) + indent - 1)
+
+
+        return res

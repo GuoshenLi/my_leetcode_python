@@ -1,4 +1,3 @@
-# 本质上来讲是一个进制的问题
 # 本质上是一个数字进制表示的问题.
 # 一头猪负责一个进制位数。
 # 先来考虑一种最简单的情况，buckets = 1000, minutesToDie = 15, minutesToTest = 15。
@@ -23,12 +22,15 @@
 
 
 
-import torch.nn.functional as F
-F.cross_entropy()
-
+import math
 class Solution:
     def poorPigs(self, buckets: int, minutesToDie: int, minutesToTest: int) -> int:
         stage_per_pig = (minutesToTest // minutesToDie) + 1
+
+        # 要通过换底公式: stage ** n > bucker > stage ** (n - 1)
+        # stage ** n == bucket
+        # n = log stage(底) bucket
+        # 换成以e为底数
+        # n = (log e(底) buckets) / (log e(底) stage_per_pig)
+
         return math.ceil(math.log(buckets) / math.log(stage_per_pig))
-
-

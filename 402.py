@@ -1,7 +1,6 @@
 class Solution:
     def removeKdigits(self, num: str, k: int) -> str:
 
-
         stack = []
         remain = len(num) - k
         for character in num:
