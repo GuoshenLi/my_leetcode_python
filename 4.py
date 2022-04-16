@@ -112,10 +112,3 @@ class Solution:
         else:
             return (getKthElement(0, 0, total_length // 2) +
                     getKthElement(0, 0, total_length // 2 + 1)) / 2
-
-
-
-
-
-
-
