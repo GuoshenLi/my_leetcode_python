@@ -20,18 +20,20 @@ class Solution:
 
 class Solution:
     def mySqrt(self, x: int) -> int:
-        l = 0
-        r = x
 
-        while l < r:
-            mid = (l + r + 1) // 2
 
-            if mid * mid <= x:
-                l = mid
+        left, right = 0, x
+        # 找最后一个数字的平方 <= x
+
+        while left < right:
+            mid = (left + right + 1) // 2
+
+            if mid ** 2 > x:
+                right = mid - 1
             else:
-                r = mid - 1
+                left = mid
 
-        return l
+        return left
 
 
 class Solution:
