@@ -1,28 +1,6 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
 
-        for i in range(len(matrix)):
-            if matrix[i][0] <= target <= matrix[i][-1]:
-                return self.binary_search(matrix[i], target)
-        return False
-
-    def binary_search(self, array, target):
-        left = 0
-        right = len(array) - 1
-        while left <= right:
-            mid = (left + right) // 2
-            if array[mid] == target:
-                return True
-            if array[mid] < target:
-                left = mid + 1
-            else:
-                right = mid - 1
-        return False
-
-
-class Solution:
-    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-
         if not matrix[0]: return False
 
         # 选择右上角或者左下角
@@ -75,5 +53,26 @@ class Solution:
                 left = mid + 1
             else:
                 right = mid - 1
+
+        return False
+
+
+
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+
+        left, right = 0, m * n - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if matrix[mid // n][mid % n] == target:
+                return True
+            elif matrix[mid // n][mid % n] > target:
+                right = mid - 1
+            else:
+                left = mid + 1
 
         return False
