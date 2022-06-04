@@ -22,3 +22,28 @@ class Solution:
                 slow = getnext(slow)
                 fast = getnext(getnext(fast))
         return False
+
+
+
+
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+
+        n = len(nums)
+        get_next = lambda i: (i + nums[i]) % n
+
+        for i in range(n):
+            slow = i
+            fast = i
+
+            while nums[slow] * nums[fast] > 0 and nums[slow] * nums[get_next(fast)] > 0:
+
+                slow = get_next(slow)
+                fast = get_next(get_next(fast))
+
+                if slow == fast:
+                    if slow == get_next(slow):
+                        break
+                    return True
+
+        return False

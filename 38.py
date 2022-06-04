@@ -18,3 +18,27 @@ class Solution:
         res += str(right - left) + tmp[left]
         return res
 
+
+class Solution:
+    def countAndSay(self, n: int) -> str:
+        if n == 1: return '1'
+
+        tmp = self.countAndSay(n - 1)
+        res = ""
+        left = right = 0
+
+        while right < len(tmp):
+            while right < len(tmp) and tmp[left] == tmp[right]:
+                right += 1
+
+            res += str(right - left) + tmp[left]
+            left = right
+
+        return res
+
+
+
+
+
+
+
