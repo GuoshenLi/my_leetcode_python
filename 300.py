@@ -53,36 +53,36 @@ class Solution:
 print(Solution().lengthOfLIS(nums = [1,3,5,4,7]))
 
 
-# # 更好的二分问题
-# from typing import List
-# class Solution:
-#     def lengthOfLIS(self, nums: List[int]) -> int:
-#         size = len(nums)
-#
-#         tail = []
-#         for i in range(size):
-#             # 【逻辑 1】比 tail 数组实际有效的末尾的那个元素还大
-#             # 先尝试是否可以接在末尾
-#             if not tail or nums[i] > tail[-1]:
-#                 tail.append(nums[i])
-#
-#             else:
-#
-#                 # 使用二分查找法，在有序数组 tail 中
-#                 # 找到第 1 个大于等于 nums[i] 的元素，尝试让那个元素更小
-#                 # 这点很关键！记住这个代码呼之欲出
-#                 left = 0
-#                 right = len(tail) - 1
-#                 while left < right:
-#                     # 选左中位数不是偶然，而是有原因的，原因请见 LeetCode 第 35 题题解，也是找第一个大于等于它的数的下标
-#                     mid = (left + right) // 2
-#                     if tail[mid] < nums[i]:
-#                         # 中位数肯定不是要找的数，把它写在分支的前面
-#                         left = mid + 1
-#                     else:
-#                         right = mid
-#                 # 走到这里是因为【逻辑 1】的反面，因此一定能找到第 1 个大于等于 nums[i] 的元素，因此无需再单独判断
-#                 tail[left] = nums[i]
-#                 # tail 的长度是对的 但是tail中的内容不是对应的最长子序列
-#         return len(tail)
+# 更好的二分问题
+from typing import List
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        size = len(nums)
+
+        tail = []
+        for i in range(size):
+            # 【逻辑 1】比 tail 数组实际有效的末尾的那个元素还大
+            # 先尝试是否可以接在末尾
+            if not tail or nums[i] > tail[-1]:
+                tail.append(nums[i])
+
+            else:
+
+                # 使用二分查找法，在有序数组 tail 中
+                # 找到第 1 个大于等于 nums[i] 的元素，尝试让那个元素更小
+                # 这点很关键！记住这个代码呼之欲出
+                left = 0
+                right = len(tail) - 1
+                while left < right:
+                    # 选左中位数不是偶然，而是有原因的，原因请见 LeetCode 第 35 题题解，也是找第一个大于等于它的数的下标
+                    mid = (left + right) // 2
+                    if tail[mid] < nums[i]:
+                        # 中位数肯定不是要找的数，把它写在分支的前面
+                        left = mid + 1
+                    else:
+                        right = mid
+                # 走到这里是因为【逻辑 1】的反面，因此一定能找到第 1 个大于等于 nums[i] 的元素，因此无需再单独判断
+                tail[left] = nums[i]
+                # tail 的长度是对的 但是tail中的内容不是对应的最长子序列
+        return len(tail)
 
