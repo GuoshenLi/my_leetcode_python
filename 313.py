@@ -1,18 +1,17 @@
 class Solution:
     def nthSuperUglyNumber(self, n: int, primes: List[int]) -> int:
-        # 其实就是上次的进阶版本
-        # k指针
 
-        nums = [1]
-        k = len(primes)
-        i_index = [0] * k # k指针在这里了
+        pointers = [1 for i in range(len(primes))]
 
-        for i in range(1, n):
-            ugly = min([primes[j] * nums[i_index[j]] for j in range(k)])
-            nums.append(ugly)
-            for j in range(k):
-                if ugly == primes[j] * nums[i_index[j]]:
-                    i_index[j] += 1
+        dp = [0] * (n + 1)
+        dp[1] = 1
 
-        return nums[n - 1]
+        for i in range(2, n + 1):
 
+            temp = min(dp[pointers[k]] * primes[k] for k in range(len(primes)))
+            dp[i] = temp
+            for k in range(len(primes)):
+                if temp == dp[pointers[k]] * primes[k]:
+                    pointers[k] += 1
+
+        return dp[-1]
