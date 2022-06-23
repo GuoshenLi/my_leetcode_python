@@ -75,3 +75,23 @@ class Solution:
 
 
         return dfs(0, 0)
+
+
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        sum_ = sum(nums)
+        if sum_ % 2 != 0: return False
+        target = sum_ // 2
+        n = len(nums)
+        dp = [False] * (target + 1)
+        dp[0] = True
+
+        for num in nums:
+            for j in range(target, -1, -1):
+                if j - num >= 0:
+                    dp[j] = dp[j] or dp[j - num]
+
+
+
+        return dp[-1]
