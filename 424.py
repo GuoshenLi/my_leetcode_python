@@ -6,7 +6,7 @@ class Solution:
 
         # 字符串合法 能替换
         def valid_string():
-            return sum(num.values()) - max(num.values())
+            return sum(num.values()) - max(num.values()) <= k
 
         num = defaultdict(int)
         n = len(s)
