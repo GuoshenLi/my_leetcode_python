@@ -1,36 +1,34 @@
-from collections import Counter
-
-
+from collections import defaultdict, Counter
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        window = {}
-        left = right = valid = 0
-        res = ''
-        length = float('inf')
+        n = len(s)
 
-        need = Counter(t)
-        while right < len(s):
+        left, right, valid, needs = 0, 0, 0, Counter(t)
+        window = defaultdict(int)
+        min_len = float("+inf")
+        res = ""
+        while right < n:
+
             c = s[right]
             right += 1
-            if c in need:
-                window[c] = window.get(c, 0) + 1
-                if window[c] == need[c]:
+
+            if c in needs:
+                window[c] += 1
+                if window[c] == needs[c]:
                     valid += 1
 
-            while valid == len(need):
-                if right - left < length:
-                    length = right - left
+            while valid == len(needs):
+                if right - left < min_len:
+                    min_len = right - left
                     res = s[left: right]
 
                 d = s[left]
                 left += 1
 
-                if d in need:
-                    # 只有相等才要 -1
-                    if window[d] == need[d]:
+                if d in needs:
+                    if needs[d] == window[d]:
                         valid -= 1
 
                     window[d] -= 1
 
         return res
-
