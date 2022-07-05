@@ -6,7 +6,7 @@ class Node:
         self.left = left
         self.right = right
 """
-
+# 不是原地
 class Solution:
     def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root: return None
@@ -35,3 +35,29 @@ class Solution:
         return head.right
 
 
+
+
+class Solution:
+    def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
+
+        if not root: return None
+
+        def dfs(root):
+            head = tail = root
+            if root.right:
+                headR, tail = dfs(root.right)
+                root.right = headR
+                headR.left = root
+
+            if root.left:
+                head, tailL = dfs(root.left)
+                root.left = tailL
+                tailL.right = root
+
+            return head, tail
+
+        head, tail = dfs(root)
+        head.left = tail
+        tail.right = head
+
+        return head
