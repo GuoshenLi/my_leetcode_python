@@ -16,11 +16,11 @@ class Solution:
 
     def maxrectangle(self, heights):
         ans = 0
-        heights = [-1] + heights + [-1]
-        stack = [0]
-        for i in range(1, len(heights)):
-            while heights[stack[-1]] > heights[i]:
-                cur_height = heights[stack.pop()]
-                ans = max(ans, cur_height * (i - stack[-1] - 1))
+        heights = [0] + heights + [0]
+        stack = []
+        for i in range(len(heights)):
+            while stack and heights[stack[-1]] > heights[i]:
+                cur = stack.pop()
+                ans = max(ans, heights[cur] * (i - stack[-1] - 1))
             stack.append(i)
         return ans

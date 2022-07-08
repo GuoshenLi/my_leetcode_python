@@ -16,5 +16,28 @@ class Solution:
 
         return root.val + self.sum_(root.left) + self.sum_(root.right)
 
+# 2022/7/5 我已经不再是从前那个少年
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findTilt(self, root: Optional[TreeNode]) -> int:
 
+        if not root: return 0
+        self.res = 0
+
+        def dfs(root):
+            if not root: return 0
+
+            left_sum = dfs(root.left)
+            right_sum = dfs(root.right)
+
+            self.res += abs(left_sum - right_sum)
+            return left_sum + right_sum + root.val
+
+        dfs(root)
+        return self.res
 
