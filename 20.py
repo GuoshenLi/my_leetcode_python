@@ -1,21 +1,21 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-
         stack = []
-        match = {'(': ')', '[': ']', '{': '}'}
+
+        table = {
+            ")": "(",
+            "]": "[",
+            "}": "{",
+        }
 
         for char in s:
-            if char in match:  # 左括号
+
+            if char in ["(", "[", "{"]:
                 stack.append(char)
+            else:
+                if not stack: return False
+                if stack[-1] != table[char]: return False
+                stack.pop()
 
-            else:  # 看栈顶匹配与否
-                if stack and match[stack[-1]] == char:
-                    stack.pop()
+        return len(stack) == 0
 
-                else:  # 不匹配
-                    return False
-
-        if not stack:
-            return True
-        else:
-            return False

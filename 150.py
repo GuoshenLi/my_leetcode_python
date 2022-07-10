@@ -18,3 +18,36 @@ class Solution:
 
         return stack[0]
 
+
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+
+        stack = []
+
+        for item in tokens:
+            if item == "+":
+                a = stack.pop()
+                b = stack.pop()
+                stack.append(int(a) + int(b))
+
+            elif item == "-":
+                a = stack.pop()
+                b = stack.pop()
+                stack.append(int(b) - int(a))
+
+            elif item == "*":
+                a = stack.pop()
+                b = stack.pop()
+                stack.append(int(a) * int(b))
+
+            elif item == "/":
+                a = stack.pop()
+                b = stack.pop()
+                stack.append(int(b) / int(a))
+
+            else:
+                stack.append(item)
+
+        return int(stack[0])
