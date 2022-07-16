@@ -25,11 +25,13 @@ class Twitter:
             ids = [userId] + self.users.get(userId)  # 计算待排查id，包括用户自身 id 还有他 follow 的人的 id
             tmp = []  # 待返回的结果集
             count = 10  # 计数器：排查最新的10条
-            for post in self.posts[-1:-(len(self.posts) + 1):-1]:  # 开始排查，并将 tweetId 加入结果集
+            for post in self.posts[::-1]:  # 开始排查，并将 tweetId 加入结果集
                 if count > 0:
                     if post[0] in ids:
                         tmp.append(post[1])
                         count -= 1
+                else:
+                    break
             return tmp
 
     def follow(self, followerId: int, followeeId: int) -> None:

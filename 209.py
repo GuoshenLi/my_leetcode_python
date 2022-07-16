@@ -1,4 +1,5 @@
 # 前缀和
+from typing import List
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
         n = len(nums)
@@ -83,3 +84,31 @@ class Solution:
 
         return res if res != float('+inf') else 0
 
+
+
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+
+
+        n = len(nums)
+        left = 0
+        right = 0
+
+        # window: [left, right)
+
+        res = float("+inf")
+        sum_ = 0
+
+        while right < n:
+            sum_ += nums[right]
+            right += 1
+
+            while sum_ >= target:
+                res = min(res, right - left)
+                sum_ -= nums[left]
+                left += 1
+
+        return 0 if res == float("+inf") else res
+
+
+print(Solution().minSubArrayLen(target=7, nums=[2,3,1,2,4,3]))
