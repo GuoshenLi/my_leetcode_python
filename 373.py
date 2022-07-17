@@ -36,26 +36,26 @@ class Solution:
 import heapq
 
 # 大根堆其实就是添加一个负号
+import heapq
 class Solution:
     def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
 
+        # 最小 要大根堆
         heap = []
 
         for num1 in nums1:
             for num2 in nums2:
                 if len(heap) >= k:
-                    # 添加负号
-                    if -(num1 + num2) > heap[0][0]:
-                        heapq.heapreplace(heap, (-(num1 + num2), [num1, num2]))
+                    if (num1 + num2) < -heap[0][0]:
+                        heapq.heappop(heap)
+                        heapq.heappush(heap, [-(num1 + num2), [num1, num2]])
                     else:
-                        # 因为两个是升序数组 所以可以立刻break
                         break
                 else:
-                    heapq.heappush(heap, (-(num1 + num2), [num1, num2]))
+                    heapq.heappush(heap, [-(num1 + num2), [num1, num2]])
 
 
-        return [heap[i][1] for i in range(min(k, len(nums1) * len(nums2)))]
-        # 注意一个坑爹的特殊条件。
+        return list(map(lambda x: x[1], heap))
 
 
 

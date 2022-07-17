@@ -12,7 +12,7 @@ class Solution:
         return res
 
 
-
+# 其实没必要 都是nlogn
 import heapq
 from collections import Counter
 class Solution:
@@ -22,7 +22,7 @@ class Solution:
         # 大根堆 加负号
         heapq.heapify(items)
         res = ""
-        for i in range(len(count)):
+        while heap:
             val, key = heapq.heappop(items)
             res += key * (-val)
         return res

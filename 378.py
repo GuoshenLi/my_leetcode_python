@@ -42,15 +42,15 @@ class Solution:
                     j += 1
                 else:
                     i -= 1
-            return num >= k
+            return num < k
 
         left, right = matrix[0][0], matrix[-1][-1]
         while left < right:
             mid = (left + right) // 2
             if check(mid):
-                right = mid
-            else:
                 left = mid + 1
+            else:
+                right = mid
 
         return left
 

@@ -19,3 +19,51 @@ class Solution:
 
 
 print(Solution().maxSlidingWindow(nums = [3,1,-1,5], k = 3))
+
+
+
+
+
+# 2022.7.17 我已不再是从前那个少年
+# O(nlog(k))
+import heapq
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        heap = []
+        res = []
+        for i in range(len(nums)):
+
+            heapq.heappush(heap, (-nums[i], i))
+            if len(heap) >= k:
+                while heap[0][1] < i - k + 1:
+                    heapq.heappop(heap)
+                res.append(-heap[0][0])
+
+        return res
+
+
+
+from collections import deque
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        queue = deque()
+        res = []
+        # 维护一个单调递减双端队列
+        # 队列的第一个元素是滑动窗口最大值的下标
+        for i in range(len(nums)):
+            # 如果下标超出窗口范围，要pop
+            if queue and queue[0] <= i - k:
+                queue.popleft()
+            # 维护单调递减队列
+            while queue and nums[i] > nums[queue[-1]]:
+                queue.pop()
+            # 加入
+            queue.append(i)
+            # 满足k个了 再append 进去
+            if i >= k - 1:
+                res.append(nums[queue[0]])
+
+        return res
+
