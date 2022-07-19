@@ -16,4 +16,19 @@ class Solution:
             if pre_sum[i] == post_sum[i]:
                 return i
 
-        return -1  
+        return -1
+
+
+
+class Solution:
+    def pivotIndex(self, nums: List[int]) -> int:
+        total = sum(nums)
+        sum_ = 0
+
+        for i in range(len(nums)):
+            if 2 * sum_ + nums[i] == total:
+                return i
+
+            sum_ += nums[i]
+
+        return -1
