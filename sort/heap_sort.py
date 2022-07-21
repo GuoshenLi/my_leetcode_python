@@ -74,8 +74,7 @@ def heap_sort_2(li):
         li[0], li[i] = li[i], li[0]
         sift_down(li, 0, i - 1) # 因为换完以后要更新最后一个元素为i - 1
 
-import heapq
-heapq.heapify()
+
 # 堆排序也很简单
 if __name__ == "__main__":
     li = [random.randint(0, 100) for _ in range(1000)]
