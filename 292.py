@@ -1,8 +1,10 @@
+import random
+
+
 class Solution:
     def canWinNim(self, n: int) -> bool:
         # 找规律
         return (n % 4) != 0
-
 
 
 class Solution:
