@@ -1,61 +1,94 @@
-from typing import List
-class Solution:
-    def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        provinces = len(isConnected)
-        visited = set()
-        circles = 0
+from collections import deque
 
-        for i in range(provinces):
-            if i not in visited:
-                Q = collections.deque([i])
-                while Q:
-                    j = Q.popleft()
-                    visited.add(j)
-                    for k in range(provinces):
-                        if isConnected[j][k] == 1 and k not in visited:
-                            Q.append(k)
-                circles += 1
-
-        return circles
-
-
+# bfs
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         n = len(isConnected)
-        self.num_group = n
-        parent = [-1] * n
-        rank = [0] * n
+        graph = [[] for i in range(n)]
+        visited = [False] * n
+        for i in range(n):
+            for j in range(i + 1, n):
+                if isConnected[i][j] == 1:
+                    graph[i].append(j)
+                    graph[j].append(i)
+
+        count = 0
+        for i in range(n):
+            if visited[i] == False:
+                count += 1
+
+                queue = deque()
+                queue.append(i)
+                visited[i] = True
+                while queue:
+                    index = queue.popleft()
+                    for neighbor in graph[index]:
+                        if visited[neighbor] == False:
+                            queue.append(neighbor)
+                            visited[neighbor] = True
+        return count
+
+# dfs
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        graph = [[] for i in range(n)]
+        visited = [False] * n
+        for i in range(n):
+            for j in range(i + 1, n):
+                if isConnected[i][j] == 1:
+                    graph[i].append(j)
+                    graph[j].append(i)
+
+        def dfs(index):
+            visited[index] = True
+            for neighbor in graph[index]:
+                if visited[neighbor] == False:
+                    dfs(neighbor)
+
+        count = 0
+        for i in range(n):
+            if visited[i] == False:
+                dfs(i)
+                count += 1
+        return count
+
+
+
+# 并查集
+class UnionFind:
+    def __init__(self, length):
+        self.length = length
+        self.parents = [-1] * self.length
+        self.cc = length
+
+    def find(self, x):
+        while self.parents[x] != -1:
+            x = self.parents[x]
+        return x
+
+    def union(self, x, y):
+        x_root = self.find(x)
+        y_root = self.find(y)
+
+        if x_root == y_root: return False
+        self.parents[x_root] = y_root
+        self.cc -= 1
+        return True
+
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+
+        n = len(isConnected)
+        uf = UnionFind(n)
 
         for i in range(n):
             for j in range(i + 1, n):
                 if isConnected[i][j] == 1:
-                    self.union(i, j, parent, rank)
+                    uf.union(i, j)
 
-        return self.num_group
-
-    def union(self, x, y, parent, rank):
-
-        x_root = self.find(x, parent)
-        y_root = self.find(y, parent)
-
-        if x_root != y_root:
-            if rank[x_root] > rank[y_root]:
-                parent[y_root] = x_root
-
-            elif rank[x_root] < rank[y_root]:
-                parent[x_root] = y_root
-
-            else:
-                parent[x_root] = y_root
-                rank[x_root] += 1
-
-            self.num_group -= 1
+        return uf.cc
 
 
-    def find(self, x, parent):
-        while parent[x] != -1:
-            x = parent[x]
-
-        return x
 
 

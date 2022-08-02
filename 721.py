@@ -1,76 +1,53 @@
-from collections import defaultdict
+class UnionFind:
+    def __init__(self, length):
+        self.length = length
+        self.parents = [-1] * self.length
+
+    def find(self, x):
+        while self.parents[x] != -1:
+            x = self.parents[x]
+
+        return x
+
+    def union(self, x, y):
+
+        x_root = self.find(x)
+        y_root = self.find(y)
+        if x_root == y_root: return False
+        self.parents[x_root] = y_root
+        return True
 
 
 class Solution:
-
-    def find(self, x, root):
-        while root[x] != -1:
-            x = root[x]
-        return x
-
-    def union(self, x, y, root, rank):
-        x_root = self.find(x, root)
-        y_root = self.find(y, root)
-
-        if x_root == y_root:
-            return False
-
-        else:
-            if rank[x_root] > rank[y_root]:
-                root[y_root] = x_root
-
-            elif rank[y_root] > rank[x_root]:
-                root[x_root] = y_root
-
-            else:
-                root[x_root] = y_root
-                rank[y_root] += 1
-
-            return True
-
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        n = len(accounts)
-        root = [-1 for _ in range(n)]
-        rank = [0 for _ in range(n)]
 
-        match_table = {}
+        table = {}
+        n = len(accounts)
+        uf = UnionFind(n)
+
         for i in range(n):
             for j in range(1, len(accounts[i])):
                 email = accounts[i][j]
-                if email not in match_table:
-                    match_table[email] = i
-                    # match_table 去重
+                if email not in table:
+                    table[email] = i
                 else:
-                    self.union(i, match_table[email], root, rank)
+                    uf.union(i, table[email])  # 同一个人
 
-        # [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"], ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
-
-
-        # "johnsmith@mail.com": 0, "john00@mail.com": 0
-        # "johnnybravo@mail.com": 1
-        # "johnsmith@mail.com" (2 与 0 合并)
-        # "john_newyork@mail.com": 2
-        # "mary@mail.com": 3
-        #           index:  [ 0,  1, 2,  3]
-        # 合并完以后的parent: [-1, -1, 0, -1]
-
-
-
-        dic = defaultdict(list)
-
-        for key, val in match_table.items():
-            dic[self.find(val, root)].append(key)
-
-        # number 0: email
-        # number 1: email
+        temp = defaultdict(list)
+        for k, v in table.items():
+            temp[uf.find(v)].append(k)
 
         res = []
-        for key, val in dic.items():
-            name = accounts[key][0]
-            res.append([name] + sorted(val))
-
+        for k, v in temp.items():
+            res.append([accounts[k][0]] + sorted(v))
         return res
 
 
-# 个人觉得能写出并查集已经通过一大半了！！
-Solution().accountsMerge(accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"], ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]])
+
+
+
+
+
+
+
+

@@ -138,6 +138,36 @@ class Solution:
 
         return res
 
+# 如果行数大于列数 反过来一下下。
+from sortedcontainers import SortedList
+import bisect
 
+
+class Solution:
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        m = len(matrix)
+        n = len(matrix[0])
+        res = float("-inf")
+        pre_sum = [[0] * (n + 1) for i in range(m + 1)]
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                pre_sum[i][j] = pre_sum[i - 1][j] + pre_sum[i][j - 1] + matrix[i - 1][j - 1] - pre_sum[i - 1][j - 1]
+
+        for left in range(n + 1):
+            for right in range(left + 1, n + 1):
+                upper_presum = SortedList([0])
+                '''
+                    pre_sum[j] - pre_sum[i] <= k
+                    pre_sum[i] >= pre_sum[j] - k
+                    在有序数组中找第一个大于pre_sum[j] - k的pre_sum[i]
+                '''
+                for j in range(1, m + 1):
+                    bottom_presum = pre_sum[j][right] - pre_sum[j][left]
+                    idx = upper_presum.bisect_left(bottom_presum - k)
+                    if idx < len(upper_presum):
+                        res = max(res, bottom_presum - upper_presum[idx])
+                    upper_presum.add(bottom_presum)
+
+        return res
 
 

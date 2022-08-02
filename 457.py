@@ -47,3 +47,32 @@ class Solution:
                     return True
 
         return False
+
+# 加多一层判断就是 O(n)
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+
+        n = len(nums)
+        get_next = lambda i: (i + nums[i]) % n
+
+        for i in range(n):
+            if nums[i] == 0:
+                continue
+            slow = i
+            fast = i
+
+            while nums[slow] * nums[fast] > 0 and nums[slow] * nums[get_next(fast)] > 0:
+                slow = get_next(slow)
+                fast = get_next(get_next(fast))
+
+                if slow == fast:
+                    if slow == get_next(slow):
+                        break
+                    return True
+
+            pointer = i
+            while nums[pointer] * nums[get_next(pointer)] > 0:
+                nums[pointer] = 0
+                pointer = get_next(pointer)
+
+        return False

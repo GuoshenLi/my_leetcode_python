@@ -5,62 +5,54 @@
 
 
 from typing import List
-class Solution:
-    def findRedundantDirectedConnection(self, edges: List[List[int]]) -> List[int]:
+class UnionFind:
+    def __init__(self, length):
+        self.length = length
+        self.parents = [-1] * self.length
 
-        n = len(edges)
-        indegree = [0] * (n + 1)
-        for k, v in edges:
-            indegree[v] += 1
-        # 看有没有入度为2的尝试删除一下
-        for i in range(n - 1, -1, -1):
-            if indegree[edges[i][1]] == 2:
-                if not self.has_circle(edges, n, i):
-                    return edges[i]
+    def find(self, x):
+        while self.parents[x] != -1:
+            x = self.parents[x]
+        return x
 
-        # 入度为1的每一条都试一下删除
-        for i in range(n - 1, -1, -1):
-            if indegree[edges[i][1]] == 1:
-                if not self.has_circle(edges, n, i):
-                    return edges[i]
+    def union(self, x, y):
+        x_root = self.find(x)
+        y_root = self.find(y)
+
+        if x_root == y_root:
+            return False
+        self.parents[x_root] = y_root
+        return True
 
 
-    def has_circle(self, edges, n, delete_index):
-        parent = [-1] * (n + 1)
-        rank = [0] * (n + 1)
-
-        for i in range(n):
-            if delete_index == i:
+    def hascycle(self, edges, index):
+        for i, (u, v) in enumerate(edges):
+            if i == index:
                 continue
-            if self.union(edges[i][0], edges[i][1], parent, rank):
-                return True
+            if not self.union(u, v): return True
 
         return False
 
 
-    def union(self, x, y, parent, rank):
 
-        x_root = self.find(x, parent)
-        y_root = self.find(y, parent)
+class Solution:
+    def findRedundantDirectedConnection(self, edges: List[List[int]]) -> List[int]:
 
-        if x_root != y_root:
-            if rank[x_root] > rank[y_root]:
-                parent[y_root] = x_root
-
-            elif rank[x_root] < rank[y_root]:
-                parent[x_root] = y_root
-
-            else:
-                parent[x_root] = y_root
-                rank[y_root] += 1
-
-            return False
-        else:
-            return True
+        n = len(edges)
+        in_degree = [0] * (n + 1)
+        for u, v in edges:
+            in_degree[v] += 1
 
 
-    def find(self, x, parent):
-        while parent[x] != -1:
-            x = parent[x]
+        for i in range(n - 1, -1, -1):
+            if in_degree[edges[i][1]] == 2:
+                uf = UnionFind(n + 1)
+                if not uf.hascycle(edges, i):
+                    return edges[i]
 
-        return x
+        for i in range(n - 1, -1, -1):
+            if in_degree[edges[i][1]] == 1:
+                uf = UnionFind(n + 1)
+                if not uf.hascycle(edges, i):
+                    return edges[i]
+
