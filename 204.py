@@ -7,15 +7,19 @@
 # 以此类推.
 
 
-
 class Solution:
     def countPrimes(self, n: int) -> int:
-        if n <= 2:
-            return 0
+        if n <= 1: return 0
 
         flag = [None] * n
-        flag[0] = False
-        flag[1] = False
+        flag[0] = flag[1] = 0
+
+        '''
+            2 => 4, 6, 8, 10..
+            3 => 6, 9, 12, 15, 18
+            5 => 以此类推
+        '''
+
         for i in range(2, n):
             if flag[i] == None:
                 flag[i] = True
