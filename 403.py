@@ -1,3 +1,4 @@
+from typing import List
 class Solution:
     def canCross(self, stones: List[int]) -> bool:
         n = len(stones)
@@ -39,3 +40,28 @@ class Solution:
 
         return len(dp[stones[-1]]) > 0
 
+
+# dfs + 二分 复杂度 n ^ 2 log(n)
+import bisect
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        n = len(stones)
+
+        if stones[1] > 1: return False
+
+        @lru_cache(None)
+        def dfs(index, pre_step):
+            if index == n - 1: return True
+
+            for cur_step in range(pre_step - 1, pre_step + 2):
+                if cur_step > 0:
+                    next_index = bisect.bisect_left(stones, stones[index] + cur_step)
+                    if index < next_index < n and stones[next_index] == stones[index] + cur_step:
+                        if dfs(next_index, cur_step):
+                            return True
+
+            return False
+        return dfs(1, 1)
+
+
+print(Solution().canCross(stones=[0, 1, 3, 5, 6, 8, 12, 17]))
