@@ -12,22 +12,21 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# O(n ** 2)
 class Solution:
-    def isBalanced(self, root: TreeNode) -> bool:
-        if not root:
-            return True
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        if not root: return True
 
-        if abs(self.height(root.left) - self.height(root.right)) >= 2:
-            return False
-
-        return self.isBalanced(root.left) and self.isBalanced(root.right)
+        return abs(self.get_height(root.left) - self.get_height(root.right)) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)
 
 
 
-    def height(self, node):
-        if not node:
-            return 0
-        return max(self.height(node.left), self.height(node.right)) + 1
+
+    def get_height(self, root):
+        if not root: return 0
+
+        return 1 + max(self.get_height(root.left), self.get_height(root.right))
+
 
 
 
@@ -52,3 +51,32 @@ class Solution:
             return - 1
 
         return max(left, right) + 1 if abs(left - right) < 2 else -1
+
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        self.flag = True
+
+        def dfs(root):
+            if not root:
+                return 0
+
+            left_height = dfs(root.left)
+            right_height = dfs(root.right)
+
+            if abs(left_height - right_height) > 1:
+                self.flag = self.flag & False
+
+            return 1 + max(left_height, right_height)
+
+        dfs(root)
+
+        return self.flag

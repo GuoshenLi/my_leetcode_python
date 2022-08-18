@@ -11,7 +11,7 @@ class Solution:
         n = len(nums)
         if n == 1: return 1 if nums[0] == target or nums[0] == -target else 0
         sum_ = sum(nums)
-        if (sum_ + target) % 2 != 0 or target > sum_: return 0
+        if (sum_ + target) % 2 != 0: return 0
 
         target = (sum_ + target) // 2
 
