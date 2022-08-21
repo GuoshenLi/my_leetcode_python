@@ -130,26 +130,26 @@ def findClosestCentroids(X, centroids):
 
     K = centroids.shape[0]
 
-    # You need to return the following variables correctly.
+
     idx = np.zeros(X.shape[0])
 
-    # ====================== YOUR CODE HERE ======================
+
     for i in range(X.shape[0]):
         idx[i] = np.argmin(np.sum((X[i, :] - centroids) ** 2, axis=1))
-    # =============================================================
+
     return idx
 
 
 def computeCentroids(X, idx, K):
 
     m, n = X.shape
-    # You need to return the following variables correctly.
+
     centroids = np.zeros((K, n))
 
-    # ====================== YOUR CODE HERE ======================
+
     for i in range(K):
         centroids[i, :] = np.mean(X[idx == i], axis=0)
-    # =============================================================
+
     return centroids
 
 
@@ -157,10 +157,9 @@ def kMeansInitCentroids(X, K):
 
     m, n = X.shape
 
-    # ====================== YOUR CODE HERE ======================
     choice = np.random.permutation(m)[:K]
     centroids = X[choice]
-    # =============================================================
+
     return centroids
 
 
