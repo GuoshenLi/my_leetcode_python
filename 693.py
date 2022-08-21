@@ -8,3 +8,17 @@ class Solution:
                 return False
             flag = str1[i]
         return True
+
+
+class Solution:
+    def hasAlternatingBits(self, n: int) -> bool:
+
+        flag = -1
+        while n > 0:
+            bit = n & 1
+            if flag ^ bit == 0: return False
+            flag = bit
+            n >>= 1
+
+        return True
+

@@ -54,4 +54,40 @@ class Solution:
         return False
 
 
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+
+        if len(s1) > len(s2): return False
+
+        diff_array = [0] * 26
+
+        for i in range(len(s1)):
+            diff_array[ord(s2[i]) - ord("a")] += 1
+            diff_array[ord(s1[i]) - ord("a")] -= 1
+
+        diff_count = [item != 0 for item in diff_array].count(True)
+
+        if diff_count == 0: return True
+
+        for i in range(len(s1), len(s2)):
+            if diff_array[ord(s2[i]) - ord("a")] == -1:
+                diff_count -= 1
+            elif diff_array[ord(s2[i]) - ord("a")] == 0:
+                diff_count += 1
+
+            diff_array[ord(s2[i]) - ord("a")] += 1
+
+            if diff_array[ord(s2[i - len(s1)]) - ord("a")] == 1:
+                diff_count -= 1
+            elif diff_array[ord(s2[i - len(s1)]) - ord("a")] == 0:
+                diff_count += 1
+
+            diff_array[ord(s2[i - len(s1)]) - ord("a")] -= 1
+
+            if diff_count == 0:
+                return True
+
+        return False
+
+
 print(Solution().checkInclusion(s1 = "ab" , s2 = "eidbaooo"))
