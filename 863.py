@@ -20,7 +20,6 @@ class Solution:
             dfs(node.left)
             dfs(node.right)
             return None
-
         dct = defaultdict(list)
         dfs(root)
         this_level = deque()
