@@ -1,6 +1,3 @@
-
-
-
 import tensorflow as tf
 
 def binary_cross_entropy(logits, y):
