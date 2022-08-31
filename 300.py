@@ -20,7 +20,7 @@ class Solution:
 
 
 # 猿辅导 如果不只是返回长度是要返回子序列要怎么办
-# 网易面试题目
+# 网易面试题目 字节商业化二面
 class Solution:
 
     # dp[i] 为以nums[i]为结尾的 最长递增子序列的长度
@@ -30,27 +30,29 @@ class Solution:
             return 0
         n = len(nums)
         dp = [1] * n
-        index = [-1] * n
+
         for i in range(n):
             for j in range(i):
                 if nums[i] > nums[j]:
-                    if dp[j] + 1 > dp[i]:
-                        dp[i] = dp[j] + 1
-                        index[i] = j
+                        dp[i] = max(dp[i], dp[j] + 1)
+        #                           i
+        # nums = [2, 1, 5, 3, 6, 4, 8, 9, 7]
+        # dp   = [1, 1, 2, 2, 3, 3, 4, 5, 4]
+        # res  = [-1,-1,-1,-1,-1]
+        #                   j
+        length = max(dp)
+        res = [-1] * length
+        j = length - 1
+        for i in range(n - 1, -1, -1):
+            if dp[i] == length:
+                res[j] = nums[i]
+                length -= 1
+                j -= 1
 
-        max_len = max(dp)
-        res = []
-        for i in range(n):
-            if dp[i] == max_len:
-                # 看index数组
-                max_index = i
-                while max_index != -1:
-                    res.append(nums[max_index])
-                    max_index = index[max_index]
+        return res
 
-        return res[::-1]
 
-print(Solution().lengthOfLIS(nums = [1,3,5,4,7]))
+print(Solution().lengthOfLIS(nums = [1,2,8,6,4]))
 
 
 # 更好的二分问题
