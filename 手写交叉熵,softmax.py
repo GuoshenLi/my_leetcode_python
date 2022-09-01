@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 def binary_cross_entropy(logits, y):
-    # logits: [bs,]
+    # logits: [bs]
     # label: [bs,]
 
     pred = tf.sigmoid(logits)

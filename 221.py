@@ -1,7 +1,6 @@
 class Solution:
     def maximalSquare(self, matrix: List[List[str]]) -> int:
-        if len(matrix) == 0 or len(matrix[0]) == 0:
-            return 0
+
         # 以dp[i][j]为终点能够变成多大的正方形的边长
         maxSide = 0
         m, n = len(matrix), len(matrix[0])
