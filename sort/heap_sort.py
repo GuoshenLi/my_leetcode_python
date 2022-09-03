@@ -57,7 +57,7 @@ def sift_down(li, low, high):
 def heap_sort_1(li):
     n = len(li)
 
-    for i in range(len(li)):
+    for i in range(n):
         sift_up(li, 0, i)
 
     for i in range(n - 1, -1, -1):
