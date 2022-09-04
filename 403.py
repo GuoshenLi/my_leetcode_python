@@ -65,3 +65,28 @@ class Solution:
 
 
 print(Solution().canCross(stones=[0, 1, 3, 5, 6, 8, 12, 17]))
+
+# dp[i][k] 表示青蛙能否达到「现在所处的石子编号」为 i 且「上一次跳跃距离」为 k的状态。
+
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+
+        n = len(stones)
+        dp = [[False] * n for i in range(n)]
+        dp[0][0] = True
+
+        for i in range(1, n):
+            if stones[i] - stones[i - 1] > i:
+                return False
+
+        for i in range(1, n):
+            for j in range(i - 1, -1, -1):
+                k = stones[i] - stones[j]
+                if k > j + 1:
+                    break
+
+                dp[i][k] = dp[j][k - 1] or dp[j][k] or dp[j][k + 1]
+                if i == n - 1 and dp[i][k]:
+                    return True
+
+        return False
