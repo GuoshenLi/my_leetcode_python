@@ -45,6 +45,7 @@ class Solution:
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 from collections import deque
 class Solution:
 
@@ -60,6 +61,3 @@ class Solution:
             return False
 
         return self.recur_BST(node.left, min, node.val) and self.recur_BST(node.right, node.val, max)
-
-
-

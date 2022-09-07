@@ -32,7 +32,7 @@ class Solution:
                 break
 
             differ = Counter()
-            for start in range(i, num_words * each_length, each_length):
+            for start in range(i, i + num_words * each_length, each_length):
                 word = s[start: start + each_length]
                 differ[word] += 1
 

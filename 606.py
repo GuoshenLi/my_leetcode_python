@@ -10,29 +10,24 @@
 # 如果只有left为空节点，则输出root()(right)；
 # 如果只有right为空节点则可以忽略右节点的()，输出为root(left)。
 # 其实就是先序遍历
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def tree2str(self, t: TreeNode) -> str:
+    def tree2str(self, root: Optional[TreeNode]) -> str:
 
-        def dfs(node):
-            if not node:
-                return ''
+        def dfs(root):
+            if not root: return ""
+            if not root.left and not root.right: return str(root.val)
+            res = str(root.val)
 
-            if not node.left and not node.right:
-                return str(node.val)
+            res += "(" + dfs(root.left) + ")"
 
-            res = str(node.val)
-
-            if node.left:
-                res += '(' + dfs(node.left) + ')'
-
-            else:
-                res += '()'
-
-            if node.right:
-                res += '(' + dfs(node.right) + ')'
-
+            if root.right:
+                res += "(" + dfs(root.right) + ")"
             return res
 
-        return dfs(t)
-
-
+        return dfs(root)
