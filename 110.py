@@ -61,22 +61,20 @@ class Solution:
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         self.flag = True
 
         def dfs(root):
-            if not root:
-                return 0
+            if not root: return 0
 
-            left_height = dfs(root.left)
-            right_height = dfs(root.right)
+            left = dfs(root.left)
+            right = dfs(root.right)
 
-            if abs(left_height - right_height) > 1:
-                self.flag = self.flag & False
+            self.flag = self.flag & (abs(left - right) <= 1)
 
-            return 1 + max(left_height, right_height)
+            return 1 + max(left, right)
 
         dfs(root)
-
         return self.flag
