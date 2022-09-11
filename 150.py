@@ -48,6 +48,6 @@ class Solution:
                 stack.append(int(b) / int(a))
 
             else:
-                stack.append(item)
+                stack.append(int(item))
 
-        return int(stack[0])
+        return stack[0]
