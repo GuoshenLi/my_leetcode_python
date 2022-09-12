@@ -10,8 +10,8 @@ for _ in range(num_item):
 
 dp = [0 for i in range(capacity + 1)]
 
-for i in range(1, capacity + 1):
-    for j in range(num_item):
+for j in range(num_item):
+    for i in range(1, capacity + 1):
         capa_this = num_list[j][0]
         val_this = num_list[j][1]
         if i - capa_this >= 0:

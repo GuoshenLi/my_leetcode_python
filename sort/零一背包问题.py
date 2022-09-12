@@ -40,11 +40,11 @@ for _ in range(num_item):
 dp = [0 for i in range(capacity + 1)]
 
 # 外层循环item lis 内层循环capacity 倒序
-for i in range(1, num_item + 1):
+for i in range(num_item):
     for j in range(capacity, -1, -1):
 
-        capa_this = item_list[i - 1][0]
-        value_this = item_list[i - 1][1]
+        capa_this = item_list[i][0]
+        value_this = item_list[i][1]
 
         if j - capa_this >= 0:
             dp[j] = max(dp[j], dp[j - capa_this] + value_this)
@@ -52,3 +52,28 @@ for i in range(1, num_item + 1):
 
 print(dp[-1])
 
+# NC309 如果背包必须要装满 则能装入的最大价值是多少
+# https://www.nowcoder.com/practice/3ed13831e2cc4613866edee237d5a804?tpId=196
+#
+
+num_item, capacity = list(map(int, input().split()))
+item_list = []
+
+for _ in range(num_item):
+    item_list.append(list(map(int, input().split())))
+
+
+dp = [float("-inf") for i in range(capacity + 1)] # 初始化不一样
+dp[0] = 0
+# 外层循环item lis 内层循环capacity 倒序
+for i in range(num_item):
+    for j in range(capacity, -1, -1):
+
+        capa_this = item_list[i][0]
+        value_this = item_list[i][1]
+
+        if j - capa_this >= 0:
+            dp[j] = max(dp[j], dp[j - capa_this] + value_this)
+
+
+print(-1 if dp[-1] <= 0 else dp[-1])
