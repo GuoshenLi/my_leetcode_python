@@ -18,6 +18,7 @@ class Word:
     def __lt__(self, other):
         if self.f < other.f or (self.f == other.f and self.w > other.w):
                                                      # 字母排在越后的越小。
+                                                     # 满足什么条件self排在后面？？
             return True
         else:
             return False
