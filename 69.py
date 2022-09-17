@@ -2,18 +2,17 @@
 from typing import List
 class Solution:
     def mySqrt(self, x: int) -> int:
-        if x == 0:
-            return 0
+        if x == 0: return 0
+        t = x
 
-        n, x0 = float(x), float(x)
         while True:
-            xi = 0.5 * (x0 + n / x0)
-            if abs(x0 - xi) < 1e-7:
+
+            t_new = 1 / 2 * (t + x / t)
+            if abs(t_new - t) < 1e-7:
                 break
-            x0 = xi
+            t = t_new
 
-        return int(xi)
-
+        return int(t_new)
 
 # 二分查找
 # 最后一个小于等于它的数
