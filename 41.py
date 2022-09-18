@@ -21,3 +21,18 @@ class Solution:
 
         return n + 1
 
+# 如果对时间复杂度没有要求
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+
+        nums.sort()
+
+        if nums[0] > 1 or nums[-1] < 1: return 1
+
+        max_ = max(nums)
+
+        for i in range(1, max_ + 1):
+            if i not in nums:
+                return i
+
+        return max_ + 1
