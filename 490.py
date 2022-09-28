@@ -37,3 +37,33 @@ class Solution:
 
 
         return False
+
+
+
+from collections import deque
+class Solution:
+    def hasPath(self, maze: List[List[int]], start: List[int], destination: List[int]) -> bool:
+
+        m, n = len(maze), len(maze[0])
+        visited = [[False] * n for _ in range(m)]
+        queue = deque()
+        queue.append((start[0], start[1]))
+        visited[start[0]][start[1]] = True
+        while queue:
+            x, y = queue.popleft()
+            if [x, y] == destination:
+                return True
+            for indent_x, indent_y in ((0,1), (1,0), (0,-1), (-1,0)):
+                new_x = x + indent_x
+                new_y = y + indent_y
+                while 0 <= new_x < m and 0<= new_y < n and maze[new_x][new_y] == 0:
+                    new_x += indent_x
+                    new_y += indent_y
+                new_x -= indent_x        #碰壁了，退后一步
+                new_y -= indent_y        #碰壁了，退后一步
+                if visited[new_x][new_y] == False:    #下一步的起点
+                    visited[new_x][new_y] = True
+                    queue.append((new_x, new_y))
+
+        return False
+
