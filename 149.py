@@ -73,11 +73,18 @@ class Solution:
 from collections import defaultdict
 class Solution:
     def maxPoints(self, points: List[List[int]]) -> int:
-        ans = 1
+        n = len(points)
+        if n <= 2: return n
+        ans = 0
+
         for i in range(len(points) - 1):
+            duplicate = 1
             table = defaultdict(int)
             for j in range(i + 1, len(points)):
                 dx, dy = points[j][0] - points[i][0], points[j][1] - points[i][1]
-                table[dy / dx if dx else float('+inf')] += 1
-            ans = max(ans, max(table.values()) + 1)
+                if dx == 0 and dy == 0:
+                    duplicate += 1
+                else:
+                    table[dy / dx if dx else float('+inf')] += 1
+            ans = max(ans, max(table.values()) + duplicate)
         return ans
