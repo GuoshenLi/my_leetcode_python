@@ -31,5 +31,5 @@ class LayerNorm(nn.Module):
         self.beta = nn.Parameter(torch.zeros(shape))
 
     def forward(self, X):
-        Y = batch_norm(X, self.gamma, self.beta, eps=1e-5)
+        Y = layer_norm(X, self.gamma, self.beta, eps=1e-5)
         return Y
