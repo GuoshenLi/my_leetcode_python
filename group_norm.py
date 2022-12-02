@@ -8,7 +8,7 @@ def group_norm(x, gamma, beta, G, eps):
     mean = x.mean(dim=(2, 3, 4), keepdim=True)
     var = ((x - mean) ** 2).mean(dim=(2, 3, 4), keepdim=True)
     x = (x - mean) / torch.sqrt(var + eps)
-
+    x = torch.reshape(x, (-1, C, H, W))
     return x * gamma + beta
 
 class GroupNorm(nn.Module):
