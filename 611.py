@@ -49,13 +49,14 @@ class Solution:
     def __find_first_cannot_triangle(self, nums, left, right, target):
         # 在 nums 的子区间 [left, right] 里找第 1 个大于等于 target 的元素的索引
         # 如果不存在，返回 -1
+        if target > nums[-1]:
+            return -1
+
         while left < right:
             mid = (left + right) // 2
             if nums[mid] < target:
                 left = mid + 1
             else:
                 right = mid
-        # 后处理，因为很有可能找不到大于等于 target 的元素
-        if nums[left] < target:
-            return -1
+
         return left
