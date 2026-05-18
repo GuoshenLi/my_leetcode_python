@@ -1,6 +1,14 @@
 import random
 
 
+'''
+    temp == 7
+       
+    [0, 3, -1, 7, 9, 10]
+
+
+'''
+
 def partition(nums, left, right):
     temp = nums[left]
 

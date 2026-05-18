@@ -1,42 +1,5 @@
 import random
 
-# def merge(nums, low, mid, high):
-#     left = low
-#     right = mid + 1
-#     tmp = []
-#     while left <= mid and right <= high:
-#         if nums[left] <= nums[right]:
-#             tmp.append(nums[left])
-#             left += 1
-#         else:
-#             tmp.append(nums[right])
-#             right += 1
-#
-#     while left <= mid:
-#         tmp.append(nums[left])
-#         left += 1
-#     while right <= high:
-#         tmp.append(nums[right])
-#         right += 1
-#     nums[low: high + 1] = tmp
-#
-# def merge_sort(nums, left, right):
-#     if left < right:
-#         mid = (left + right) // 2
-#         merge_sort(nums, left, mid)
-#         merge_sort(nums, mid + 1, right)
-#         merge(nums, left, mid, right)
-#
-#
-#
-# li = [random.randint(0, 20) for _ in range(20)]
-# merge_sort(li, 0, len(li) - 1)
-# print(li)
-#
-#
-#
-
-
 
 def merge(nums, left, mid, right):
     p1 = left
@@ -76,4 +39,5 @@ def merge_sort(nums, left, right):
 li = [random.randint(0, 20) for _ in range(20)]
 merge_sort(li, 0, len(li) - 1)
 print(li)
+
 

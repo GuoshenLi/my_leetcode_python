@@ -46,10 +46,12 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        # 0 原来死亡 现在死亡
-        # 1 原来存活 现在存活
-        # -1 原来存活 现在死亡
-        # 2 原来死亡 现在存活
+        '''
+            0. 原来挂了，现在挂了
+            1  原来存活，现在存活
+            -1 原来存活，现在挂了
+            2 原来挂了，现在存活
+        '''
 
         m = len(board)
         n = len(board[0])
@@ -57,7 +59,6 @@ class Solution:
 
         for i in range(m):
             for j in range(n):
-
                 count = 0
                 for indent_x, indent_y in directions:
                     new_x = i + indent_x
@@ -66,26 +67,23 @@ class Solution:
                     if 0 <= new_x <= m - 1 and 0 <= new_y <= n - 1 and abs(board[new_x][new_y]) == 1:
                         count += 1
 
-                if abs(board[i][j]) == 1: # 包括原来存活的
+                if abs(board[i][j]) == 1:
                     if count < 2:
                         board[i][j] = -1
-                    elif count == 2 or count == 3:
+                    elif 2 <= count <= 3:
                         board[i][j] = 1
                     elif count > 3:
                         board[i][j] = -1
 
-                elif board[i][j] == 0 or board[i][j] == 2: # 原来死亡的所有情况
+                elif board[i][j] == 0 or board[i][j] == 2:
                     if count == 3:
                         board[i][j] = 2
-                    else:
-                        board[i][j] = 0
-
-
-
 
         for i in range(m):
             for j in range(n):
-                if board[i][j] > 0:
-                    board[i][j] = 1
-                else:
+                if board[i][j] == -1:
                     board[i][j] = 0
+                elif board[i][j] == 2:
+                    board[i][j] = 1
+
+
