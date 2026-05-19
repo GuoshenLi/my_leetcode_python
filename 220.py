@@ -18,3 +18,29 @@ class Solution:
                 k_set.remove(nums[i - k])
 
         return False
+
+
+'''
+把中间的for循环换成二分查找
+'''
+class Solution(object):
+    def containsNearbyAlmostDuplicate(self, nums, k, t):
+        from sortedcontainers import SortedSet
+        st = SortedSet()
+        left, right = 0, 0
+        res = 0
+        '''
+            nums = [1, 5, 9, 1, 5, 9]
+                    [5, 100] # 二分遍历
+        '''
+        while right < len(nums):
+            if right - left > k:
+                st.remove(nums[left])
+                left += 1
+            # 第一个大于等于
+            index = bisect.bisect_left(st, nums[right] - t)
+            if st and index < len(st) and abs(st[index] - nums[right]) <= t:
+                return True
+            st.add(nums[right])
+            right += 1
+        return False
