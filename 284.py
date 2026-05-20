@@ -72,8 +72,8 @@ class PeekingIterator:
 class PeekingIterator:
     def __init__(self, iterator):
         self.iterator = iterator
-        self._next = iterator.next()
         self._hasNext = iterator.hasNext()
+        self._next = iterator.next()
 
     def peek(self):
         return self._next
