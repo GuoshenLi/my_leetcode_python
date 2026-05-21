@@ -40,6 +40,37 @@ class Solution:
 
 
 
+#位运算 简单
+class Solution:
+    def validUtf8(self, data: List[int]) -> bool:
+
+
+        cnt = 0
+        for num in data:
+            if cnt > 0:
+                if num & int('11000000', 2) == int('10000000', 2):
+                    cnt -= 1
+                else:
+                    return False
+            elif num & int('11100000', 2) == int('11000000', 2):
+                cnt = 1
+            elif num & int('11110000', 2) == int('11100000', 2):
+                cnt = 2
+            elif num & int('11111000', 2) == int('11110000', 2):
+                cnt = 3
+            elif num & int('10000000', 2) != 0:
+                return False
+
+        return cnt == 0
+
+
+#       Number of Bytes  |        UTF-8 octet sequence
+#                        |              (binary)
+#    --------------------+---------------------------------------------
+#             1          | 0xxxxxxx
+#             2          | 110xxxxx 10xxxxxx
+#             3          | 1110xxxx 10xxxxxx 10xxxxxx
+#             4          | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
 
 
 
