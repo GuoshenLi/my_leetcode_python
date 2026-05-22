@@ -1,12 +1,12 @@
-class Solution:
-    def maximumProduct(self, nums: List[int]) -> int:
-        res = float('-inf')
-        for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                for k in range(j + 1, len(nums)):
-                    res = max(res, nums[i] * nums[j] * nums[k])
-
-        return res
+# class Solution:
+#     def maximumProduct(self, nums: List[int]) -> int:
+#         res = float('-inf')
+#         for i in range(len(nums)):
+#             for j in range(i + 1, len(nums)):
+#                 for k in range(j + 1, len(nums)):
+#                     res = max(res, nums[i] * nums[j] * nums[k])
+#
+#         return res
 
 
 
@@ -58,4 +58,36 @@ class Solution(object):
         return max(max1 * max2 * max3, min1 * min2 * max1)
 
 
+import heapq
 
+
+class Solution:
+    def maximumProduct(self, nums) -> int:
+
+        '''
+            两个最小的数 和 三个最大的数
+        '''
+
+        heapq.heapify(nums)  # O(n)
+        count = 0
+        n = len(nums)
+        while len(nums) > 0:
+            num = heapq.heappop(nums)
+
+            if count == 0:
+                min1 = num
+            elif count == 1:
+                min2 = num
+
+            if count == n - 1:
+                max1 = num
+            elif count == n - 2:
+                max2 = num
+            elif count == n - 3:
+                max3 = num
+
+            count += 1
+        return max(min1 * min2 * max1, max1 * max2 * max3)
+
+
+print(Solution().maximumProduct(nums=[1, 2, 3]))
