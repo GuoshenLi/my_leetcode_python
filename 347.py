@@ -67,5 +67,67 @@ class Solution:
         return left
 
 
+from collections import defaultdict
+
+
+class Solution:
+
+    def partition(self, nums, left, right):
+
+        i = randint(left, right)
+        nums[left], nums[i] = nums[i], nums[left]
+
+        le = left + 1
+        ge = right
+
+        '''
+
+            nums = [7, -1, 2, 5, 8, 9, 10]
+
+
+                  left.             le        
+                                 ge
+
+        '''
+
+        while True:
+            while le <= ge and nums[le][1] < nums[left][1]:
+                le += 1
+
+            while le <= ge and nums[ge][1] > nums[left][1]:
+                ge -= 1
+
+            if le >= ge:
+                break
+
+            nums[le], nums[ge] = nums[ge], nums[le]
+            le += 1
+            ge -= 1
+
+        nums[left], nums[ge] = nums[ge], nums[left]
+
+        return ge
+
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+
+        counter = defaultdict(int)
+        for num in nums:
+            counter[num] += 1
+
+        counter = list(counter.items())  # [(num, times)]
+        print(counter)
+        left = 0
+        right = len(counter) - 1
+        k = len(counter) - k
+        while True:
+
+            mid = self.partition(counter, left, right)
+            if mid == k:
+                return list(map(lambda x: x[0], counter[mid:]))
+            elif mid > k:
+                right = mid - 1
+            else:
+                left = mid + 1
+
 
 print(Solution().topKFrequent(nums = [1,1,1,2,2,3], k = 2))
