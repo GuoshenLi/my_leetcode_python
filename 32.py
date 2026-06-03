@@ -53,7 +53,7 @@ class Solution:
         # 让栈不为空
         res = 0
         for i in range(len(s)):
-            top_index = stack[-1]
+            top_index = stack[-1] # stack 存的是当前这个最长有效子串的起始位置，因为一开始不知道是哪个起点，所以设定为 -1
 
             if top_index != -1 and s[i] == ')' and s[top_index] == '(':
                                                 # 为了保证不出错 top_index 要判断不等于 -1
