@@ -54,3 +54,46 @@ class BatchNorm(nn.Module):
             X, self.gamma, self.beta, self.moving_mean,
             self.moving_var, eps=1e-5, momentum=0.9)
         return Y
+
+
+
+import tensorflow as tf
+from tensorflow.python.training import moving_averages
+
+
+def batch_normalization(input, is_training, name="BN",
+                        moving_decay=0.999, eps=1e-5):
+    input_shape = input.get_shape()
+    params_shape = input_shape[-1]
+    axis = list(range(len(input_shape) - 1))
+    with tf.variable_scope(name, reuse=tf.AUTO_REUSE) as scope:
+        beta = tf.get_variable('beta',
+                               params_shape,
+                               initializer=tf.zeros_initializer)
+        gamma = tf.get_variable('gamma',
+                                params_shape,
+                                initializer=tf.ones_initializer)
+        moving_mean = tf.get_variable('moving_mean',
+                                      params_shape,
+                                      initializer=tf.zeros_initializer,
+                                      trainable=False
+                                      )
+        moving_var = tf.get_variable('moving_var',
+                                     params_shape,
+                                     initializer=tf.ones_initializer,
+                                     trainable=False
+                                     )
+        def train():
+            # These ops will only be preformed when training.
+            mean, var = tf.nn.moments(input, axis)
+            update_moving_mean = moving_averages.assign_moving_average(moving_mean,
+                                                                       mean,
+                                                                       moving_decay)
+            update_moving_var = moving_averages.assign_moving_average(
+                moving_var, var, moving_decay)
+            return tf.identity(mean), tf.identity(var)
+
+        mean, var = tf.cond(tf.equal(is_training, True), train,
+                                 lambda: (moving_mean, moving_var))
+
+        return tf.nn.batch_normalization(input, mean, var, beta, gamma, eps)
