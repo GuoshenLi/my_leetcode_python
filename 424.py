@@ -49,6 +49,10 @@ from collections import defaultdict
 
 
 class Solution:
+    '''
+        有点像枚举不同的left了 left 从 1-> n
+
+    '''
     def characterReplacement(self, s: str, k: int) -> int:
 
         window = defaultdict(int)
