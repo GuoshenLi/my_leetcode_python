@@ -8,7 +8,9 @@ class Solution:
         dp = [[0, 0] for _ in range(n)]
         dp[0][0] = 0 # 卖
         dp[0][1] = -prices[0] # 买
-
+        '''
+            前i天卖和买得到的最大的前
+        '''
         for i in range(1, n):
             dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
             dp[i][1] = max(dp[i - 1][1], -prices[i])

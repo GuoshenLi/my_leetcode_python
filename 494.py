@@ -66,11 +66,11 @@ class Solution:
 
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-
+        if nums == [0]: return 2
         if len(nums) == 1: return 1 if nums[0] == target or nums[0] == -target else 0
 
         sumValue = sum(nums)
-        if target > sumValue or (sumValue + target) % 2 == 1: return 0
+        if abs(target) > sumValue or (sumValue + target) % 2 == 1: return 0
         bagSize = (sumValue + target) // 2
 
         dp = [0] * (bagSize + 1)
