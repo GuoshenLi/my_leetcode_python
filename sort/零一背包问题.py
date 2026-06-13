@@ -56,24 +56,30 @@ print(dp[-1])
 # https://www.nowcoder.com/practice/3ed13831e2cc4613866edee237d5a804?tpId=196
 #
 
-num_item, capacity = list(map(int, input().split()))
-item_list = []
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+#
+# @param v int整型
+# @param n int整型
+# @param nums int整型二维数组
+# @return int整型一维数组
+#
+class Solution:
+    def knapsack(self, v: int, n: int, nums: List[List[int]]) -> List[int]:
+        # write code here
 
-for _ in range(num_item):
-    item_list.append(list(map(int, input().split())))
+        dp = [0 for _ in range(v + 1)]
+        dp_2 = [float("-inf") for _ in range(v + 1)]
+        dp_2[0] = 0
+        for i in range(1, n + 1):
+            weight = nums[i - 1][0]
+            value = nums[i - 1][1]
+            for j in range(1, v + 1):
+                if j - weight >= 0:
+                    dp[j] = max(dp[j], dp[j - weight] + value)
+                    dp_2[j] = max(dp_2[j], dp_2[j - weight] + value)
+
+        return [dp[-1], 0 if dp_2[-1] < 0 else dp_2[-1]]
 
 
-dp = [float("-inf") for i in range(capacity + 1)] # 初始化不一样
-dp[0] = 0
-# 外层循环item lis 内层循环capacity 倒序
-for i in range(num_item):
-    for j in range(capacity, -1, -1):
-
-        capa_this = item_list[i][0]
-        value_this = item_list[i][1]
-
-        if j - capa_this >= 0:
-            dp[j] = max(dp[j], dp[j - capa_this] + value_this)
-
-
-print(-1 if dp[-1] <= 0 else dp[-1])
