@@ -58,7 +58,7 @@ class Solution:
                 visited[i] = False
                 if not last:
 
-                    memo[sta] = True
+                    memo[state] = True
                     return True
             memo[state] = False
             return False

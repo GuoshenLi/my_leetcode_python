@@ -52,34 +52,32 @@ for i in range(num_item):
 
 print(dp[-1])
 
-# NC309 如果背包必须要装满 则能装入的最大价值是多少
-# https://www.nowcoder.com/practice/3ed13831e2cc4613866edee237d5a804?tpId=196
+# NC145  01背包
+# https://www.nowcoder.com/practice/2820ea076d144b30806e72de5e5d4bbf?tpId=196&difficulty=&judgeStatus=&tags=&title=01&sourceUrl=&gioEnter=menu
 #
 
 #
 # 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
 #
-#
-# @param v int整型
-# @param n int整型
-# @param nums int整型二维数组
-# @return int整型一维数组
+# 计算01背包问题的结果
+# @param V int整型 背包的体积
+# @param n int整型 物品的个数
+# @param vw int整型二维数组 第一维度为n,第二维度为2的二维数组,vw[i][0],vw[i][1]分别描述i+1个物品的vi,wi
+# @return int整型
 #
 class Solution:
-    def knapsack(self, v: int, n: int, nums: List[List[int]]) -> List[int]:
+    def knapsack(self , V: int, n: int, vw: List[List[int]]) -> int:
         # write code here
+        dp = [0 for _ in range(V + 1)]
 
-        dp = [0 for _ in range(v + 1)]
-        dp_2 = [float("-inf") for _ in range(v + 1)]
-        dp_2[0] = 0
-        for i in range(1, n + 1):
-            weight = nums[i - 1][0]
-            value = nums[i - 1][1]
-            for j in range(1, v + 1):
-                if j - weight >= 0:
-                    dp[j] = max(dp[j], dp[j - weight] + value)
-                    dp_2[j] = max(dp_2[j], dp_2[j - weight] + value)
 
-        return [dp[-1], 0 if dp_2[-1] < 0 else dp_2[-1]]
+        for item in vw:
+            volumn = item[0]
+            weight = item[1]
+            for i in range(V, -1, -1):
+                if i - volumn >= 0:
+                    dp[i] = max(dp[i], dp[i - volumn] + weight)
+
+        return dp[-1]
 
 
