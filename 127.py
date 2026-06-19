@@ -6,32 +6,27 @@ from typing import List
 from collections import deque
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        wordList = set(wordList)
-        if endWord not in wordList:
-            return 0
-        len_word = len(beginWord)
-        queue = deque()
-        queue.append([beginWord, [beginWord], 1])
-        if beginWord in wordList:
-            wordList.remove(beginWord)
+        wordSet = set(wordList)
+        if endWord not in wordSet: return 0
 
-        res = []
+        queue = deque()
+        queue.append([beginWord, 1])
+        if beginWord in wordSet:
+            wordSet.remove(beginWord)
 
         while queue:
-            word, path, step = queue.popleft()
+            word, length = queue.popleft()
             if word == endWord:
-                res.append(path)
+                return length
 
-
-            for i in range(len_word):
+            for i in range(len(word)):
                 for j in range(26):
-                    newword = word[:i] + chr(ord('a') + j) + word[i + 1:]
-                    if newword in wordList:
-                        wordList.remove(newword)
-                        queue.append([newword, path + [newword], step + 1])
+                    new_word = word[:i] + chr(ord('a') + j) + word[i + 1:]
+                    if new_word in wordSet:
+                        wordSet.remove(new_word)
+                        queue.append([new_word, length + 1])
 
-        return res
-
+        return 0
 
 print(Solution().ladderLength(
 beginWord = "hit",
