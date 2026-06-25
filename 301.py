@@ -44,6 +44,49 @@ class Solution:
         return self.res
 
 
+# 枚举所有子序列 其实就是最长的有效子序列 标准暴力dfs
+
+from typing import List
+
+
+class Solution:
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        def is_valid(s):
+            res = 0
+            for c in s:
+                if c == '(':
+                    res += 1
+                elif c == ')':
+                    res -= 1
+                if res < 0:
+                    return False
+            return res == 0
+
+        self.res = []
+        self.max_length = 0
+        n = len(s)
+
+        def dfs(start, temp):
+
+            if len(temp) > self.max_length:
+                if is_valid(temp):
+                    self.max_length = len(temp)
+                    self.res = []
+                    self.res.append(''.join(temp[:]))
+            elif len(temp) == self.max_length:
+                if is_valid(temp):
+                    self.res.append(''.join(temp[:]))
+            for i in range(start, n):
+                if i > start and s[i] == s[i - 1]:
+                    continue
+
+                temp.append(s[i])
+                dfs(i + 1, temp)
+                temp.pop()
+
+        dfs(0, [])
+
+        return self.res
 
 # 暴力枚举 BFS
 class Solution:
