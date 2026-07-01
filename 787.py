@@ -9,8 +9,7 @@ class Solution:
 
         k += 1
         min_dis = [[float('+inf')] * (k + 1) for i in range(n)]
-        for i in range(k + 1):
-            min_dis[src][i] = 0
+
 
         heap = [(0, src, 0)]  # distance, src, transfer
 

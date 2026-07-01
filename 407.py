@@ -37,18 +37,17 @@ class Solution:
                 tmp_x = x + i
                 tmp_y = y + j
                 # 是否到达边界
-                if tmp_x < 0 or tmp_y < 0 or tmp_x >= row or tmp_y >= col or (tmp_x, tmp_y) in visited:
-                    continue
+                if 0 <= tmp_x <= row - 1 and 0 <= tmp_y <= col - 1 and (tmp_x, tmp_y) not in visited:
+                    if heightMap[tmp_x][tmp_y] < h:
+                        # 如果新高度小 可以积累雨水
+                        ans += h - heightMap[tmp_x][tmp_y]
 
-                if heightMap[tmp_x][tmp_y] < h:
-                    ans += h - heightMap[tmp_x][tmp_y]
-
-                visited.add((tmp_x, tmp_y))
-
-                # 更新一下下高度 其实就是一种扩散
-                heapq.heappush(heap, [max(h, heightMap[tmp_x][tmp_y]), tmp_x, tmp_y])
-
+                    # 更新一下下高度 其实就是一种扩散
+                    heapq.heappush(heap, [max(h, heightMap[tmp_x][tmp_y]), tmp_x, tmp_y])
+                    visited.add((tmp_x, tmp_y))
         return ans
+
+
 
 
 
