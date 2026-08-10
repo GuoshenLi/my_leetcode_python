@@ -1,4 +1,5 @@
 # 回溯难
+from typing import List
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         res = []
@@ -58,3 +59,32 @@ class Solution:
 
         return list(table)
 
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+
+        res = []
+        visited = [False for _ in range(n)]
+        nums.sort()
+        def dfs(temp):
+            if len(temp) == n:
+                res.append(temp[:])
+            for i in range(n):
+                if visited[i] == True:
+                    continue
+                if i > 0 and nums[i] == nums[i - 1] and visited[i - 1] == True:
+                    continue
+
+                visited[i] = True
+                temp.append(nums[i])
+                dfs(temp)
+                temp.pop()
+                visited[i] = False
+
+
+        dfs([])
+        return res
+
+print(Solution().permuteUnique([1,1,2]))

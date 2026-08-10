@@ -35,5 +35,3 @@ class Solution:
             FLAG = not FLAG
         return paths
 
-
-
