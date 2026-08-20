@@ -40,6 +40,47 @@ class Solution:
         return root
 
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque
+
+
+class Solution:
+    def addOneRow(self, root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
+        if depth == 1:
+            new_root = TreeNode(val)
+            new_root.left = root
+            return new_root
+
+        queue = deque()
+        queue.append(root)
+        level = 1
+        while queue:
+            length_this_level = len(queue)
+            for _ in range(length_this_level):
+                node = queue.popleft()
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+                if depth - 1 == level:
+                    temp = node.left
+                    node.left = TreeNode(val)
+                    node.left.left = temp
+
+                    temp = node.right
+                    node.right = TreeNode(val)
+                    node.right.right = temp
+
+            level += 1
+
+        return root
+
 # 2021.11.2 递归
 # Definition for a binary tree node.
 # class TreeNode:

@@ -1,3 +1,4 @@
+from typing import List
 class Solution:
     def verifyPreorder(self, preorder: List[int]) -> bool:
 
@@ -42,3 +43,37 @@ class Solution:
             right  =self.verifyPreorder(preorder[i: ])
 
         return left and right
+
+class Solution:
+    def verifyTreeOrder(self, postorder: List[int]) -> bool:
+        '''
+            左 右 根
+            左边比它小
+            右边比它大
+        '''
+
+        if not postorder: return True
+        root = postorder[-1]
+
+        i = len(postorder) - 2
+
+        while i >= 0 and postorder[i] > root:
+            i -= 1
+
+        j = i
+
+        while j >= 0:
+            if postorder[j] > root:
+                return False
+            j -= 1
+
+        left = True
+        right = True
+        if i > 1:
+            left = self.verifyTreeOrder(postorder[0: i + 1])
+        if i < len(postorder) - 1:
+            right = self.verifyTreeOrder(postorder[i + 1: -1])
+
+        return left and right
+
+print(Solution().verifyTreeOrder([4,6,5,9,8]))
