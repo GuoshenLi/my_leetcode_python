@@ -54,27 +54,27 @@ class Solution:
 
 
 
-
+# 20260820
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        self.flag = True
-
-        def dfs(root):
+        if not root: return True
+        self.res = True
+        def height(root):
             if not root: return 0
 
-            left = dfs(root.left)
-            right = dfs(root.right)
+            left_height = height(root.left)
+            right_height = height(root.right)
 
-            self.flag = self.flag & (abs(left - right) <= 1)
+            if abs(left_height - right_height) > 1:
+                self.res = False
 
-            return 1 + max(left, right)
+            return 1 + max(left_height, right_height)
 
-        dfs(root)
-        return self.flag
+        height(root)
+        return self.res
