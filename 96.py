@@ -32,3 +32,21 @@ class Solution:
 
 
         return dfs(n)
+
+# 以j为根结点
+class Solution:
+    def numTrees(self, n: int) -> int:
+        self.table = {}
+        def dfs(n):
+            if n == 0 or n == 1: return 1
+
+            if n in self.table: return self.table[n]
+
+            sum_ = 0
+            for j in range(1, n + 1):
+                sum_ += dfs(j - 1) * dfs(n - j)
+            self.table[n] = sum_
+            return self.table[n]
+
+
+        return dfs(n)
