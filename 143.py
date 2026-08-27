@@ -44,56 +44,43 @@ class Solution:
             temp = temp.next
 
 
-
-
-
-
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reorderList(self, head: ListNode) -> None:
+    def reorderList(self, head: Optional[ListNode]) -> None:
         """
         Do not return anything, modify head in-place instead.
         """
-        if not head or not head.next: return head
-
-        fast = head.next
+        if not head: return None
+        if not head.next: return head
         slow = head
+        fast = head.next
 
         while fast and fast.next:
-            fast = fast.next.next
             slow = slow.next
+            fast = fast.next.next
 
-        first_lk = head
-        second_lk = slow.next
-        slow.next = None # 断开
+        second_head = slow.next
+        slow.next = None
+        second_head = self.reverse(second_head)
 
-        # 反转一下second_lk
-        second_lk = self.reverse_lk(second_lk)
+        cur = dummy = ListNode(-1)
+        while head and second_head:
+            cur.next = head
+            head = head.next
+            cur = cur.next
 
-        # 因为是是取中间
-        # 因此的话 first_lk 的长度肯定要么等于second_lk的长度
-        #                          要吗比second_lk的长度多 1
-        dummy = ListNode(-1)
-        p = dummy
-        while first_lk:
-            p.next = first_lk
-            first_lk = first_lk.next
-            p = p.next
-
-            if second_lk:
-                p.next = second_lk
-                second_lk = second_lk.next
-                p = p.next
-
+            cur.next = second_head
+            second_head = second_head.next
+            cur = cur.next
+        cur.next = head or second_head
 
         return dummy.next
 
-    def reverse_lk(self, head):
-        if not head or not head.next: return head
+    def reverse(self, head):
 
         p = head
         q = head.next
