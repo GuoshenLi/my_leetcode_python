@@ -19,6 +19,8 @@ class Solution:
 
 
 
+print(Solution().find132pattern([3, 1, 4, 2]))
+
 
 class Solution:
     # O(n^2)的时间复杂度

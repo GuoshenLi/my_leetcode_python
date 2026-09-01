@@ -22,16 +22,19 @@ class Solution:
 # 单调栈 单调递减栈
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        '''
+            维护一个单调递减栈
 
-        dict1 = {}
+        '''
+
         stack = []
+        table = {}
         for num in nums2:
-            while stack and stack[-1] < num:
-                cur = stack.pop()
-                dict1[cur] = num
+            while stack and num > stack[-1]:
+                table[stack.pop()] = num
             stack.append(num)
+        res = []
+        for num in nums1:
+            res.append(table[num] if num in table else -1)
 
-        for item in stack:
-            dict1[item] = -1
-
-        return [dict1[item] for item in nums1]
+        return res
