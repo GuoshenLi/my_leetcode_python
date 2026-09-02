@@ -50,4 +50,4 @@ class Solution:
             else:
                 stack.append(int(item))
 
-        return stack[0]
+        return int(stack[0])
