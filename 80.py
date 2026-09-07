@@ -37,3 +37,23 @@ class Solution(object):
 
         return j
 
+# 20260907
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+
+        left = right = 0
+        n = len(nums)
+        while right < n:
+            count = 1
+            while right < n and right + 1 < n and nums[right] == nums[right + 1]:
+                count += 1
+                right += 1
+
+            if count >= 2: count = 2
+            for i in range(min(count, 2)):
+                nums[left] = nums[right]
+                left += 1
+            right += 1
+
+        return left
+
