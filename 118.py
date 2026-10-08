@@ -19,3 +19,22 @@ class Solution:
             res.append(level_res)
 
         return res
+
+
+class Solution:
+    def generate(self, numRows: int) -> list[list[int]]:
+        '''
+            [1, 2, 1]
+        '''
+
+        res = [[1]]
+
+        for i in range(1, numRows):
+            this_level = res[-1][:]
+            this_level.insert(0, 0)
+
+            for j in range(i):
+                this_level[j] = this_level[j] + this_level[j + 1]
+            res.append(this_level)
+
+        return res
