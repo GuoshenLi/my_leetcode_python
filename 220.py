@@ -20,6 +20,35 @@ class Solution:
         return False
 
 
+class Solution:
+    def containsNearbyAlmostDuplicate(self, nums: list[int], indexDiff: int, valueDiff: int) -> bool:
+
+        left = 0
+        right = 0
+        window = set()
+
+        n = len(nums)
+
+        while right < n:
+            if right - left > indexDiff:
+                window.remove(nums[left])
+                left += 1
+
+            if valueDiff == 0:
+                if nums[right] in window:
+                    return True
+            else:
+                for item in window:
+                    if abs(item - nums[right]) <= valueDiff:
+                        return True
+
+            window.add(nums[right])
+            right += 1
+
+        return False
+
+
+
 '''
 把中间的for循环换成二分查找
 '''
