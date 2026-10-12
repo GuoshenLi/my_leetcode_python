@@ -54,7 +54,7 @@ class Solution:
         # 队列的第一个元素是滑动窗口最大值的下标
         for i in range(len(nums)):
             # 如果下标超出窗口范围，要pop
-            if queue and queue[0] <= i - k:
+            while queue and queue[0] <= i - k:
                 queue.popleft()
             # 维护单调递减队列
             while queue and nums[i] > nums[queue[-1]]:
